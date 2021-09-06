@@ -1,0 +1,37 @@
+{
+	"emb_params": {
+		"latent_dim": 64,
+		"agg_mode": {
+			"separate": false,
+			"learnable_sigma_z_0": true,
+			"exp_sigma_z_0": false,
+			"learnable_mu_z_0": false,
+			"type": "Bayesian"
+		},
+		"obs_mode": "relative",
+		"latent_out_hidden_layer_sizes": [],
+		"latent_embedding_hidden_layer_sizes": [],
+		"latent_embedding_dim": 64,
+		"activation_fn": "Tanh"
+	},
+	"env_params": {
+		"agent_params": {
+			"dynamics": "unicycle_acc",
+			"obs_mode": "relative",
+			"add_walls_to_obs": false
+		},
+		"torus": false,
+		"nr_agents": 20,
+		"comm_radius": 141.4213562373095,
+		"world_size": 100,
+		"type": "Rendezvous"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "rendezvous-reprotest2",
+	"nr_parallel_envs": 10,
+	"env_steps_per_train_step": 81800,
+	"train_steps": 160,
+	"batch_size": 64
+}

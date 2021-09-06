@@ -1,0 +1,44 @@
+{
+	"emb_params": {
+		"latent_dim": 154,
+		"agg_mode": {
+			"separate": false,
+			"learnable_sigma_z_0": "one_per_dim",
+			"exp_sigma_z_0": false,
+			"variance_rectifier": "softplus",
+			"learnable_mu_z_0": "one_per_dim",
+			"type": "Bayesian"
+		},
+		"obs_mode": "relative",
+		"latent_out_hidden_layer_sizes": [
+			12,
+			128
+		],
+		"latent_embedding_hidden_layer_sizes": [],
+		"latent_embedding_dim": 12,
+		"activation_fn": "Tanh",
+		"local_obs_aggregation_space": false,
+		"agg_into_space": "same"
+	},
+	"env_params": {
+		"agent_params": {
+			"dynamics": "unicycle_acc",
+			"obs_mode": "relative",
+			"add_walls_to_obs": false
+		},
+		"torus": true,
+		"nr_agents": 20,
+		"comm_radius": 141.4213562373095,
+		"world_size": 100,
+		"type": "Rendezvous"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "opt-rendezvous-bayes-t32-rfirst-run1.1",
+	"nr_parallel_envs": 20,
+	"env_steps_per_train_step": 20480,
+	"train_steps": 1000,
+	"batch_size": 1024,
+	"training_algorithm": "ppo"
+}

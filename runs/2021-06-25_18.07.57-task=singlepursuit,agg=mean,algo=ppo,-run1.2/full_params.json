@@ -1,0 +1,40 @@
+{
+	"emb_params": {
+		"latent_dim": 160,
+		"agg_mode": {
+			"type": "Mean"
+		},
+		"obs_mode": "relative",
+		"latent_out_hidden_layer_sizes": [],
+		"latent_embedding_hidden_layer_sizes": [
+			120
+		],
+		"latent_embedding_dim": 60,
+		"activation_fn": "LeakyReLU",
+		"local_obs_aggregation_space": false,
+		"agg_into_space": "separate"
+	},
+	"env_params": {
+		"agent_params": {
+			"dynamics": "unicycle",
+			"obs_mode": "relative"
+		},
+		"torus": true,
+		"nr_agents": 10,
+		"nr_evaders": 1,
+		"comm_radius": 141.4213562373095,
+		"obs_radius": 141.4213562373095,
+		"world_size": 100,
+		"reward_mode": "min_distance",
+		"type": "PursuitEvasion"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "task=singlepursuit,agg=mean,algo=ppo,-run1.2",
+	"nr_parallel_envs": 20,
+	"env_steps_per_train_step": 102000,
+	"train_steps": 500,
+	"batch_size": 10200,
+	"training_algorithm": "ppo"
+}

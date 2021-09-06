@@ -1,0 +1,44 @@
+{
+	"emb_params": {
+		"latent_dim": 200,
+		"agg_mode": {
+			"num_heads": 2,
+			"residual": true,
+			"dropout": 0.0,
+			"type": "MultiHeadAttention"
+		},
+		"obs_mode": "relative",
+		"latent_out_hidden_layer_sizes": [
+			132
+		],
+		"latent_embedding_hidden_layer_sizes": [],
+		"latent_embedding_dim": 72,
+		"activation_fn": "LeakyReLU",
+		"local_obs_aggregation_space": false,
+		"agg_into_space": "separate"
+	},
+	"env_params": {
+		"env": "!EvalEnv\nheight: 1.0\nkilobots: !KilobotsConf\n  mean: random\n  num: 10\n  std: 0.03\n  type: SimplePhototaxisKilobot\nobjects:\n- !ObjectConf\n  color: null\n  height: 0.1\n  idx: 0\n  init: random\n  shape: square\n  symmetry: null\n  width: 0.1\n- !ObjectConf\n  color: null\n  height: 0.1\n  idx: 0\n  init: random\n  shape: square\n  symmetry: null\n  width: 0.1\n- !ObjectConf\n  color: null\n  height: 0.1\n  idx: 0\n  init: random\n  shape: square\n  symmetry: null\n  width: 0.1\n- !ObjectConf\n  color: null\n  height: 0.1\n  idx: 0\n  init: random\n  shape: square\n  symmetry: null\n  width: 0.1\nresolution: 300\nwidth: 1.0\n",
+		"reward_function": "assembly",
+		"swarm_reward": true,
+		"agent_reward": true,
+		"agent_type": "SimpleVelocityControlKilobot",
+		"done_after_steps": 512,
+		"m_config": {
+			"observe_abs_box_pos": true,
+			"num_cluster": 2,
+			"disable_observe_object_type": false
+		},
+		"aggregate_clusters_separately": true,
+		"type": "KilobotsNew"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "task=assembly,agg=selfatt,algo=ppo,-run1.1",
+	"nr_parallel_envs": 20,
+	"env_steps_per_train_step": 256000,
+	"train_steps": 200,
+	"batch_size": 5120,
+	"training_algorithm": "ppo"
+}

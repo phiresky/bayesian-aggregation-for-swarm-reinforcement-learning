@@ -1,0 +1,42 @@
+{
+	"emb_params": {
+		"latent_dim": 20,
+		"agg_mode": {
+			"type": "Mean"
+		},
+		"obs_mode": "relative",
+		"latent_out_hidden_layer_sizes": [
+			202,
+			120
+		],
+		"latent_embedding_hidden_layer_sizes": [
+			218,
+			168
+		],
+		"latent_embedding_dim": 84,
+		"activation_fn": "LeakyReLU",
+		"local_obs_aggregation_space": false,
+		"agg_into_space": "separate"
+	},
+	"env_params": {
+		"agent_params": {
+			"dynamics": "unicycle_acc",
+			"obs_mode": "relative",
+			"add_walls_to_obs": false
+		},
+		"torus": true,
+		"nr_agents": 20,
+		"comm_radius": 141.4213562373095,
+		"world_size": 100,
+		"type": "Rendezvous"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "opt-rendezvous-mean-t23-rfirst-run1.12",
+	"nr_parallel_envs": 20,
+	"env_steps_per_train_step": 20480,
+	"train_steps": 1000,
+	"batch_size": 8274,
+	"training_algorithm": "ppo"
+}
