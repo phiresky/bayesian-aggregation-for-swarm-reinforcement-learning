@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../../include/NlOptUtil.h
+nlopt.hpp
+-
+tuple
+-
+
+../../include/projection/BatchedDiagCovOnlyProjection.h
+armadillo
+-
+nlopt.hpp
+-
+NlOptUtil.h
+-
+projection/DiagCovOnlyKLProjection.h
+-
+cblas.h
+-
+
+../../include/projection/DiagCovOnlyKLProjection.h
+armadillo
+-
+nlopt.hpp
+-
+NlOptUtil.h
+-
+
+/pfs/data5/home/kit/anthropomatik/nb9076/deep_rl_for_swarms/playground/trl/cpp_projection/src/projection/BatchedDiagCovOnlyProjection.cpp
+projection/BatchedDiagCovOnlyProjection.h
+-
+
+/pfs/data5/home/kit/anthropomatik/nb9076/deep_rl_for_swarms/playground/trl/cpp_projection/src/projection/DiagCovOnlyKLProjection.cpp
+projection/DiagCovOnlyKLProjection.h
+-
+

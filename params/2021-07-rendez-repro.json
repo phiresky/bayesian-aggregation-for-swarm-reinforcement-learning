@@ -1,0 +1,32 @@
+{
+  "emb_params": {
+    "latent_dim": 64,
+    "agg_mode": {
+      "separate": false,
+      "learnable_sigma_z_0": true,
+      "type": "Bayesian"
+    },
+    "obs_mode": "relative",
+    "activation_fn": "Tanh"
+  },
+  "env_params": {
+    "agent_params": {
+      "dynamics": "unicycle_acc",
+      "obs_mode": "relative",
+      "add_walls_to_obs": false
+    },
+    "torus": false,
+    "nr_agents": 20,
+    "comm_radius": 141.4213562373095,
+    "world_size": 100,
+    "type": "Rendezvous"
+  },
+  "policy_params": {
+    "share_vf_pi_params": false
+  },
+  "runname": "2021-07-13_14.48.05-rendezvous-reprotest1",
+  "nr_parallel_envs": 10,
+  "env_steps_per_train_step": 164000,
+  "batch_size": 64,
+  "train_steps": 160
+}

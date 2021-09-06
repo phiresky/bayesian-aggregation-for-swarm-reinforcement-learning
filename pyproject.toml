@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "playground"
+version = "0.1.0"
+description = ""
+authors = ["phiresky <phireskyde+git@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+stable-baselines3 = "1.0"
+tqdm = "^4.51.0"
+joblib = "^0.17.0"
+mpi4py = "^3.0.3"
+ipykernel = "^5.3.4"
+tensorboard = "^2.4.0"
+wheel = "^0.35.1"
+numpy = "^1.20.0"
+torchsummary = "^1.5.1"
+simplejson = "^3.17.2"
+typedload = "^2.4"
+networkx = "^2.5"
+Shapely = "^1.7.1"
+typed-argument-parser = "^1.6.1"
+PettingZoo = {version = "^1.5.2", extras = ["all"]}
+Cython = "^0.29.21"
+scikit-learn = "^0.24.1"
+PyYAML = "^5.4.1"
+gpy = {git = "https://github.com/ekalosak/GPy", rev = "ekalosak/python39"}
+optuna = "^2.5.0"
+bokeh = "<2.0.0"
+jupyter = "^1.0.0"
+plotly = "^4.14.3"
+ipywidgets = "^7.6.3"
+jupyterlab = "^3.0.7"
+optuna-dashboard = "^0.2.2"
+gym-kilobots = {git = "https://github.com/phiresky/gym-kilobots"}
+gym = {git = "https://github.com/phiresky/gym"}
+functiontrace = "^0.3.4"
+viztracer = "^0.12.0"
+kaleido = "0.2.1"
+deepdiff = "^5.3.0"
+numba = "^0.53.1"
+mypy = "^0.812"
+
+[tool.poetry.dev-dependencies]
+black = "^21.4b1"
+autoflake = "^1.4"
+
+[tool.poetry.scripts]
+cleanup = 'playground.move_uninteresting_runs:main'
+train = 'playground.train:main'
+tune = 'playground.tune:main'
+infer = 'playground.inference:main'
+running = 'playground.train:running'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

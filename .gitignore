@@ -1,0 +1,10 @@
+.ipynb_checkpoints
+/runs-bad
+__pycache__
+*.egg-info
+private*
+venv
+old-venv
+evaluations.npz
+slurm-*.out
+runs/*/best_model.zip

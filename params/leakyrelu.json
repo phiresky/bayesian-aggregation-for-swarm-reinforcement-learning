@@ -1,0 +1,22 @@
+{
+	"emb_params": {
+		"latent_dim": 64,
+		"agg_mode": {
+			"separate": false,
+			"learnable_sigma_z_0": true,
+			"type": "Bayesian"
+		},
+		"obs_mode": "relative",
+		"activation_fn": "LeakyReLU"
+	},
+	"env_params": {
+		"yaml_config": "\nenv_config:\n  !EvalEnv\n  width: 1.\n  height: 1.\n  resolution: 600\n\n  objects:\n    - !ObjectConf\n      idx: 0\n      shape: square\n      width: .1\n      height: .1\n      init: random\n\n  kilobots: !KilobotsConf\n    mean: random\n    std: .03\n\nparams:\n  sampling:\n    reward_function: assembly\n    agent_type: SimpleVelocityControlKilobot\n    num_objects: 4\n    timesteps_per_batch: 4096\n    done_after_steps: 256\n",
+		"nr_agents": 10,
+		"type": "Kilobots"
+	},
+	"policy_params": {
+		"share_vf_pi_params": false
+	},
+	"runname": "2021-02-10_14.55.50-assembly",
+	"nr_parallel_envs": 10
+}
