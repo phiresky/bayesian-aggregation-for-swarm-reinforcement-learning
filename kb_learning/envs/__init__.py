@@ -1,7 +1,7 @@
 from ._object_env import ObjectEnv
 from ._object_relative_env import ObjectRelativeEnv
 from ._object_absolute_env import ObjectAbsoluteEnv
-from ._multi_object_env import MultiObjectDirectControlEnv, MultiObjectTargetAreaDirectControlEnv
+from ._multi_object_env import MultiObjectDirectControlEnv
 from ._pose_control_env import PoseControlEnv
 from ._eval_env import EvalEnv
 from ._env_wrapper import NormalizeActionWrapper
