@@ -1,4 +1,4 @@
-"""compare the params of different runs in a plot"""
+"""compare the params of different runs in a plot, to make sure they were run with the same hyper params"""
 
 import json
 from pathlib import Path

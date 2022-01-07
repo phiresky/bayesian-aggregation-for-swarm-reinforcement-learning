@@ -33,6 +33,7 @@ class Tbout(NamedTuple):
 
 
 class Args(tap.Tap):
+    """ command line arguments """
     runs: List[str]
     mean: Literal["median", "mean"] = "median"
     err_band: Literal["none", "75", "std"] = "75"
@@ -53,7 +54,8 @@ class Args(tap.Tap):
         self.from_dict(d)
 
 
-def read_tensorboard(runsdir: Path, args: Args):
+def read_tensorboard(runsdir: Path, args: Args) -> Tbout:
+    """ read the variables specified in args from a tensorboard file and return the x,y values as np arrays """
     from tensorboard.backend.event_processing import event_accumulator
 
     g = list(runsdir.glob("PPO_1/events.out.tfevents*"))
@@ -76,7 +78,21 @@ def read_tensorboard(runsdir: Path, args: Args):
     )
 
 
-def expand_globs(runs: List[str]):
+def expand_globs(runs: List[str]) -> dict[str, list[str]]:
+    """
+    convert a list of paths/globs beginning with group names into a dictionary.
+    group names are indicated by ending with ::
+
+    e.g.
+
+    foo: a b c bar: ha he hi
+
+    becomes
+
+    {"foo": ["a", "b", "c"], "bar": ["ha", "he", "hi"]}
+
+    """
+
     groups: dict[str, list[str]] = {}
     target = None
     for run in tqdm(runs):
@@ -100,7 +116,10 @@ def expand_globs(runs: List[str]):
     return groups
 
 
-async def read_groups(runs: Dict[str, str], args: Args) -> dict[str, list[Tbout]]:
+async def read_groups(runs: Dict[str, list[str]], args: Args) -> dict[str, list[Tbout]]:
+    """
+    read a grouped list of tensorboard dirs and return the corresponding data
+    """
     import multiprocessing
     from concurrent.futures import ProcessPoolExecutor
 
@@ -120,8 +139,9 @@ async def read_groups(runs: Dict[str, str], args: Args) -> dict[str, list[Tbout]
 
     return groups
 
-
+"""
 def agg_gauss(rows, outx):
+    ""
     x, y = np.concatenate(rows, axis=1)
     # from sklearn.linear_model import BayesianRidge
     from sklearn.gaussian_process import GaussianProcessRegressor
@@ -133,9 +153,13 @@ def agg_gauss(rows, outx):
     y_mean, y_std = model.predict(outx, return_std=True)
     print("std", y_std[0:10])
     return y_mean, y_mean - y_mean * y_std, y_mean + y_mean * y_std
+"""
 
-
-def agg_simple(rows: list[tuple[np.ndarray, np.ndarray]], outx, args: Args):
+def agg_simple(rows: list[tuple[np.ndarray, np.ndarray]], args: Args):
+    """
+    aggregate a list of x,y values.
+    returns the mean/median y value, and the lower and upper bound error bands based on the method given in args.err_band
+    """
     # print("rows", rows)
     y = np.array([y for x, y in rows])
     print("yshape", y.shape)
@@ -157,7 +181,6 @@ def agg_simple(rows: list[tuple[np.ndarray, np.ndarray]], outx, args: Args):
     else:
         raise Exception("unknown band")
     return y_mean, lower, upper
-    pass
 
 
 colors = [
@@ -177,12 +200,18 @@ T = TypeVar
 
 
 def find_index(l: Iterable[int], fn: Callable[[int], bool]):
+    """ return the index in a iterable matching a predicate """
     for i, e in enumerate(l):
         if fn(e):
             return i
 
 
 def top_n(rows: list[tuple[np.ndarray, np.ndarray]], top: Optional[float]):
+    """
+    get the top :top: rows based on the second value in the tuple.
+    if :top: is an int, it is interpreted as a number.
+    if :top: is a float < 1, it is interpreted as a ratio.
+    """
     if not top:
         return rows
     rows.sort(key=lambda r: -np.mean(r[1]))
@@ -192,7 +221,8 @@ def top_n(rows: list[tuple[np.ndarray, np.ndarray]], top: Optional[float]):
         return rows[0:top]
 
 
-def get_step_idx(row: Tbout, max_steps):
+def get_step_idx(row: Tbout, max_steps: int):
+    """ return the first index that has a step value larger than :max_steps: """
     return find_index(row.steps, lambda e: e > max_steps) or int(1e9)
 
 
@@ -250,7 +280,7 @@ def process_group(group: str, rows: list[Tbout], color, args: Args):
     rows2 = top_n(rows2, args.top)
     outx = rows2[0][0]
 
-    mean, stdmin, stdmax = agg_simple(rows2, outx, args)
+    mean, stdmin, stdmax = agg_simple(rows2, args)
     # print("outx", outx[0:10])
     # print("mean", mean[0:10])
     # print("stdmin", stdmin[0:10])
