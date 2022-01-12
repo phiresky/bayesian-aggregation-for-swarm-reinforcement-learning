@@ -1,19 +1,11 @@
 # %%
 import asyncio
 import json
+import pickle
 import sys
 from pathlib import Path
-from typing import (
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Literal,
-    NamedTuple,
-    Optional,
-    TypeVar,
-    Union,
-)
+from typing import (Callable, Dict, Iterable, List, Literal, NamedTuple,
+                    Optional, TypeVar, Union)
 
 import numpy as np
 import plotly
@@ -63,19 +55,28 @@ def read_tensorboard(runsdir: Path, args: Args) -> Tbout:
         print(f"warn: given dir empty: {runsdir}")
         return None
     (eventsfile,) = g
-    acc = event_accumulator.EventAccumulator(str(eventsfile))
-    acc.Reload()
-    try:
-        scalars = acc.Scalars(args.tb_variable)
-    except KeyError as e:
-        print(runsdir, e)
-        return None
-    steps, values = zip(*[(s.step, s.value) for s in scalars])
-    return Tbout(
-        steps=np.array(steps, dtype=np.float64),
-        values=np.array(values, dtype=np.float64),
-        runsdir=runsdir,
-    )
+    cachefile = eventsfile.with_suffix(".scalars.pickle")
+    if cachefile.exists():
+        with cachefile.open('rb') as f:
+            return pickle.load(f)
+    else:
+        acc = event_accumulator.EventAccumulator(str(eventsfile))
+        acc.Reload()
+        
+        try:
+            scalars = acc.Scalars(args.tb_variable)
+        except KeyError as e:
+            print(runsdir, e)
+            return None
+        steps, values = zip(*[(s.step, s.value) for s in scalars])
+        output = Tbout(
+            steps=np.array(steps, dtype=np.float64),
+            values=np.array(values, dtype=np.float64),
+            runsdir=runsdir,
+        )
+        with cachefile.open('wb') as f:
+            pickle.dump(output, f, protocol=pickle.HIGHEST_PROTOCOL)
+            return output
 
 
 def expand_globs(runs: List[str]) -> dict[str, list[str]]:
